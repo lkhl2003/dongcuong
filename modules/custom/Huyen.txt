@@ -1,0 +1,16 @@
+I. Dau buoi coding
+1. Pull code
+git pull
+
+2. Import database
+mysql -u root -p dongcuong < dongcuong.sql
+
+=============================================
+II. Cuoi buoi coding
+1. Export database
+mysqldump -u root -p dongcuong > dongcuong.sql
+
+2. Push code
+git add .
+git commit -m 'Updated'
+git push
