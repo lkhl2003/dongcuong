@@ -14,7 +14,7 @@ function qldc_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_stat
     //dsm($form['title']['widget'][0]['value']);
     $form['#theme'] = 'dongcuong_node_xac_nhan_dan_su_form';
     $form['#cache'] = ['max-age' => 0];
-    $form['title']['widget'][0]['value']['#autocomplete_route_name'] = 'qldc.xnds_autocomplete.hovaten';
+    $form['title']['widget'][0]['value']['#autocomplete_route_name'] = 'qldc.autocomplete';
   }  
 }
 

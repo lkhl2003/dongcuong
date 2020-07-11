@@ -1,7 +1,8 @@
-qldc.xnds_autocomplete.hovaten:
-    path: '/qldc/xnds_autocomplete/hovaten'
+qldc.autocomplete:
+    path: '/qldc/autocomplete'
     defaults:
-      _controller: '\Drupal\qldc\Controller\XndsAutoCompleteController::hovaten'
+      _controller: '\Drupal\qldc\Controller\JsonAutoCompleteController::hovaten'
       _format: json
     requirements:
-      _access: 'true'  
+      _permission: 'access content'
+      
