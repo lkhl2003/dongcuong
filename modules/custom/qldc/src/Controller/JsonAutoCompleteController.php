@@ -31,7 +31,7 @@ class JsonAutoCompleteController {
       //$ngaysinh = $date->format('d/m/Y'); // format it 
 
       $results[] = [
-        'value' => EntityAutocomplete::getEntityLabels([$node]),
+        'value' => $node->getTitle(),
         'label' => $node->getTitle() . ' - ' . $node->get('field_ngaysinh')->getValue()[0]['value'],
       ];
     }
