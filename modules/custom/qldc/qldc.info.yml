@@ -1,0 +1,6 @@
+name: 'Quản lý dân cư'
+type: module
+description: 'Chương trình quản lý dân cư Phường Đông Cương.'
+package: Development
+core: 8.x
+core_version_requirement: ^8 || ^9

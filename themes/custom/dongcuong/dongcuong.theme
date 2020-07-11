@@ -1,0 +1,11 @@
+<?php
+
+function dongcuong_theme($existing, $type, $theme, $path) {
+  $rett = [
+    'dongcuong_node_congdan_form' => [
+      'render element' => 'form'
+    ],
+  ];
+
+  return $rett;
+}
