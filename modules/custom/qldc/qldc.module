@@ -9,6 +9,11 @@ function qldc_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_stat
     $form['#theme'] = 'dongcuong_node_congdan_form';
     $form['#cache'] = ['max-age' => 0];
   }
+
+  if ($form_id == 'node_xac_nhan_dan_su_form') {
+    $form['#theme'] = 'dongcuong_node_xac_nhan_dan_su_form';
+    $form['#cache'] = ['max-age' => 0];
+  }  
 }
 
 function qldc_options_list_alter(array &$options, array $context) {

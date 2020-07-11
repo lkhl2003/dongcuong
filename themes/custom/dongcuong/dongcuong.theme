@@ -5,6 +5,9 @@ function dongcuong_theme($existing, $type, $theme, $path) {
     'dongcuong_node_congdan_form' => [
       'render element' => 'form'
     ],
+    'dongcuong_node_xac_nhan_dan_su_form' => [
+      'render element' => 'form'
+    ],
   ];
 
   return $rett;

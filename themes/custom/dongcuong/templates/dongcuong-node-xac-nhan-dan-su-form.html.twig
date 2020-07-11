@@ -1,0 +1,137 @@
+Xac nhan dan su
+
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-5">
+    {{ form.title }}
+  </div>
+  <div class="col-sm-12 col-md-4 col-lg-3">
+    {{ form.field_soddcncmnd }}
+  </div>
+  <div class="col-sm-12 col-md-4 col-lg-2">
+    {{ form.field_gioitinh }}
+  </div>
+  <div class="col-sm-12 col-md-4 col-lg-2">
+    {{ form.field_ngaysinh }}
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-lg-2">
+    {{ form.field_nhommau }}
+  </div>
+  <div class="col-md-6 col-lg-3">
+    {{ form.field_tinhtranghonnhan }}
+  </div>
+  <div class="col-md-4 col-lg-2">
+    {{ form.field_dantoc }}
+  </div>
+  <div class="col-md-4 col-lg-2">
+    {{ form.field_quoctich }}
+  </div>
+  <div class="col-md-4 col-lg-3">
+    {{ form.field_tongiao }}
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    {{ form.field_noidangkykhaisinh }}
+  </div>  
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    {{ form.field_quequan }}
+  </div>  
+</div>
+
+<div class="row">  
+  <div class="col-sm-12">
+    {{ form.field_noithuongtru }}
+  </div>
+</div>
+<div class="row">  
+  <div class="col-sm-12">
+    {{ form.field_noiohientai }}
+  </div>
+</div>
+
+<fieldset>
+  <legend class="col-form-label">Thông tin Cha</legend>
+  <div class="row">
+    <div class="col-sm-12 col-md-6">
+      {{ form.field_hovatencha }}
+    </div>
+    <div class="col-sm-12 col-md-3">
+      {{ form.field_quoctichcha }}
+    </div>
+    <div class="col-sm-12 col-md-3">
+      {{ form.field_soddcncmndcha }}
+    </div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend class="col-form-label">Thông tin Mẹ</legend>
+  <div class="row">
+    <div class="col-sm-12 col-md-6">
+      {{ form.field_hovatenme }}
+    </div>
+    <div class="col-sm-12 col-md-3">
+      {{ form.field_quoctichme }}
+    </div>
+    <div class="col-sm-12 col-md-3">
+      {{ form.field_soddcncmndme }}
+    </div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend class="col-form-label">Thông tin Vợ/Chồng</legend>
+  <div class="row">
+    <div class="col-sm-12 col-md-6">
+      {{ form.field_hovatenvochong }}
+    </div>
+    <div class="col-sm-12 col-md-3">
+      {{ form.field_quoctichvochong }}
+    </div>
+    <div class="col-sm-12 col-md-3">
+      {{ form.field_soddcncmndvochong }}
+    </div>
+  </div>
+</fieldset>
+
+
+<fieldset>
+  <legend class="col-form-label">Thông tin Người đại diện</legend>
+  <div class="row">
+    <div class="col-sm-12 col-md-6">
+      {{ form.field_hovatennguoidaidien }}
+    </div>
+    <div class="col-sm-12 col-md-3">
+      {{ form.field_quoctichnguoidaidien }}
+    </div>
+    <div class="col-sm-12 col-md-3">
+      {{ form.field_soddcncmndnguoidaidien }}
+    </div>
+  </div>
+</fieldset>
+<fieldset>
+  <legend class="col-form-label">Thông tin Chủ hộ</legend>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-3">
+      {{ form.field_hovatenchuho }}
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-3">
+      {{ form.field_soddcncmndchuho }}
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-3">
+      {{ form.field_quanhevoichuho }}
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-3">
+      {{ form.field_sosohokhau }}
+    </div>
+    
+  </div>
+</fieldset>
+
+{{ form.form_build_id }}
+{{ form.form_id }}
+{{ form.actions }}
