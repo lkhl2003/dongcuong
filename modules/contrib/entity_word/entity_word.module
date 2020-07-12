@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Contains entity_word.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function entity_word_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the entity_word module.
+    case 'help.page.entity_word':
+      $output = '';
+      $output .= '<h3>' . t('Node entity to Word document') . '</h3>';
+      $output .= '<p>' . t('Download of Entity content into Word document. Node content is coverted into word document on the basis of title and body.') . '</p>';
+      $output .= '<p>' . t('This module uses office/phpword library') . '</p>';
+      $output .= '<p>' . t('Insert this URL: /entity-word/{node_id}/word in your required node twig file in anchor tag.') . '</p>';
+      return $output;
+
+    default:
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "entity_word",
+  "type": "drupal-module",
+  "description": "Convert node content into word document using the PHPOffice/PHPWord library.",
+  "license": "GPL-2.0+",
+  "require": {
+    "phpoffice/phpword": "^0.17.0",
+    "drupal/core": "^8 || ^9"
+  }
+}

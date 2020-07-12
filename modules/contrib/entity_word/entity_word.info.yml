@@ -1,0 +1,15 @@
+name: 'Entity Word'
+type: module
+description: 'Download of node entity into Word Document. Required library is `phpoffice/phpword`'
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: 'Other'
+configure: entity_word.settings
+
+dependencies:
+  - token:token
+
+# Information added by Drupal.org packaging script on 2020-04-15
+version: '8.x-2.5'
+project: 'entity_word'
+datestamp: 1586942782

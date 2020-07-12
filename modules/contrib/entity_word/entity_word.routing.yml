@@ -1,0 +1,14 @@
+entity_word.node_to_word:
+  path: '/entity-word/{node_id}/word'
+  defaults:
+    _controller: '\Drupal\entity_word\Controller\EntityWordController::nodeWord'
+    _title: 'Entity to Word Document'
+  requirements:
+    _permission: 'access content'
+entity_word.settings:
+  path: '/admin/config/system/entity_word'
+  defaults:
+    _form: '\Drupal\entity_word\Form\EntityWordSettingsForm'
+    _title: 'Entity Word Document'
+  requirements:
+    _permission: 'administer site configuration'

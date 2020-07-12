@@ -2214,28 +2214,29 @@
         ]
     },
     {
-        "name": "drupal/workflow",
-        "version": "1.4.0",
-        "version_normalized": "1.4.0.0",
+        "name": "drupal/entity_word",
+        "version": "2.5.0",
+        "version_normalized": "2.5.0.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupalcode.org/project/workflow.git",
-            "reference": "8.x-1.4"
+            "url": "https://git.drupalcode.org/project/entity_word.git",
+            "reference": "8.x-2.5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/workflow-8.x-1.4.zip",
-            "reference": "8.x-1.4",
-            "shasum": "5f4777371a002f44524e23b5b3717fac87b5c0ea"
+            "url": "https://ftp.drupal.org/files/projects/entity_word-8.x-2.5.zip",
+            "reference": "8.x-2.5",
+            "shasum": "d6fa7d64995b4ac7f9ed8c5ca07de7624ca52cfc"
         },
         "require": {
-            "drupal/core": "^8 || ^9"
+            "drupal/core": "^8 || ^9",
+            "drupal/token": "*"
         },
         "type": "drupal-module",
         "extra": {
             "drupal": {
-                "version": "8.x-1.4",
-                "datestamp": "1590740708",
+                "version": "8.x-2.5",
+                "datestamp": "1586942779",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -2249,46 +2250,86 @@
         ],
         "authors": [
             {
-                "name": "Bastlynn",
-                "homepage": "https://www.drupal.org/user/275249"
+                "name": "jayprakash01",
+                "homepage": "https://www.drupal.org/user/3611020"
+            }
+        ],
+        "description": "Download of node entity into Word Document. Required library is `phpoffice/phpword`",
+        "homepage": "https://www.drupal.org/project/entity_word",
+        "support": {
+            "source": "https://git.drupalcode.org/project/entity_word",
+            "error": "name : invalid value (entity_word), must match [A-Za-z0-9][A-Za-z0-9_.-]*/[A-Za-z0-9][A-Za-z0-9_.-]*"
+        }
+    },
+    {
+        "name": "drupal/token",
+        "version": "1.7.0",
+        "version_normalized": "1.7.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/token.git",
+            "reference": "8.x-1.7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/token-8.x-1.7.zip",
+            "reference": "8.x-1.7",
+            "shasum": "c7e3a3757282e4c94e3c1fff08d01e22155cb853"
+        },
+        "require": {
+            "drupal/core": "^8.8 || ^9"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "drupal": {
+                "version": "8.x-1.7",
+                "datestamp": "1589314266",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            },
+            "drush": {
+                "services": {
+                    "drush.services.yml": "^9 || ^10"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Berdir",
+                "homepage": "https://www.drupal.org/user/214652"
             },
             {
-                "name": "Heine",
-                "homepage": "https://www.drupal.org/user/17943"
-            },
-            {
-                "name": "JacobSingh",
-                "homepage": "https://www.drupal.org/user/68912"
-            },
-            {
-                "name": "NancyDru",
-                "homepage": "https://www.drupal.org/user/101412"
+                "name": "Dave Reid",
+                "homepage": "https://www.drupal.org/user/53892"
             },
             {
                 "name": "eaton",
                 "homepage": "https://www.drupal.org/user/16496"
             },
             {
-                "name": "johnv",
-                "homepage": "https://www.drupal.org/user/591042"
+                "name": "fago",
+                "homepage": "https://www.drupal.org/user/16747"
             },
             {
-                "name": "jvandyk",
-                "homepage": "https://www.drupal.org/user/2375"
+                "name": "greggles",
+                "homepage": "https://www.drupal.org/user/36762"
             },
             {
-                "name": "mfredrickson",
-                "homepage": "https://www.drupal.org/user/31994"
-            },
-            {
-                "name": "q0rban",
-                "homepage": "https://www.drupal.org/user/31022"
+                "name": "mikeryan",
+                "homepage": "https://www.drupal.org/user/4420"
             }
         ],
-        "description": "Defines a field type with Workflows, containing customizable state transitions.",
-        "homepage": "https://www.drupal.org/project/workflow",
+        "description": "Provides a user interface for the Token API, some missing core tokens.",
+        "homepage": "https://www.drupal.org/project/token",
         "support": {
-            "source": "https://git.drupalcode.org/project/workflow"
+            "source": "https://git.drupalcode.org/project/token"
         }
     },
     {
