@@ -30,11 +30,6 @@ class JsonAutoCompleteController {
 
     $nodes = $ids ? \Drupal\node\Entity\Node::loadMultiple($ids) : [];
     foreach ($nodes as $node) {
-      //$dateTime  = $node->get('field_ngaysinh')->getValue()[0]['value'];
-      //$date = DrupalDateTime::createFromFormat('Y-m-d', $dateTime);
-      //$ngaysinh = $date->format('d/m/Y'); // format it
-
-
       $results[] = [
         'value' => $node->getTitle() . '-' . $node->id(),
         'label' => $node->getTitle() . ' - ' . $node->get('field_ngaysinh')->getValue()[0]['value'],
