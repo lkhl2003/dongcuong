@@ -4,20 +4,36 @@
  * @file
  * Allows the creation of custom blocks through the user interface.
  */
-function qldc_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  if ($form_id == 'node_congdan_form') {
-    $form['#theme'] = 'dongcuong_node_congdan_form';
-    $form['#cache'] = ['max-age' => 0];
-  }
+function qldc_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+{
+    if ($form_id == 'node_congdan_form') {
+        $form['#theme'] = 'dongcuong_node_congdan_form';
+        $form['#cache'] = ['max-age' => 0];
+    }
 
-  if ($form_id == 'node_xac_nhan_dan_su_form') {
-    //dsm($form['title']['widget'][0]['value']);
-    $form['#theme'] = 'dongcuong_node_xac_nhan_dan_su_form';
-    $form['#cache'] = ['max-age' => 0];
-    $form['title']['widget'][0]['value']['#autocomplete_route_name'] = 'qldc.autocomplete';
-  }  
+    if ($form_id == 'node_xac_nhan_dan_su_form') {
+        //dsm($form['title']['widget'][0]['value']);
+        $form['#theme'] = 'dongcuong_node_xac_nhan_dan_su_form';
+        $form['#cache'] = ['max-age' => 0];
+        $form['title']['widget'][0]['value']['#autocomplete_route_name'] = 'qldc.autocomplete';
+        $form['title']['widget'][0]['value']['#ajax'] = [
+          'wrapper' => 'form_dan_su',
+          'event' => 'autocompleteclose',
+          'callback' => 'qldc_myAjaxCallback',
+          'disable-refocus' => FALSE,
+        ];
+    }
 }
 
-function qldc_options_list_alter(array &$options, array $context) {
-  unset($options['_none']);
+function qldc_options_list_alter(array &$options, array $context)
+{
+    unset($options['_none']);
+}
+
+function qldc_myAjaxCallback(array &$form, FormStateInterface $form_state)
+{
+    // Prepare our textfield. check if the example select field has a selected option.
+    $form['field_noithuongtru']['widget'][0]['value'] = 'Tao thuong tru';
+    watch_dog('message', 'Set noi thong tru');
+    return $form['form_dan_su'];
 }

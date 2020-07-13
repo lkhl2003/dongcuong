@@ -1,4 +1,8 @@
 <?php
+/**
+ * My controller
+ *
+ */
 namespace Drupal\qldc\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,25 +14,25 @@ use Drupal\Core\Entity\Element\EntityAutocomplete;
  */
 class JsonAutoCompleteController {
   public function hovaten(Request $request) {
-    $results = [];    
+    $results = [];
     $input = $request->query->get('q');
     if (!$input) {
       return new JsonResponse($results);
     }
     $input = Xss::filter($input);
-    $query = \Drupal::entityQuery('node')    
+    $query = \Drupal::entityQuery('node')
       ->condition('type', 'congdan')
-      ->condition('title', $input, 'CONTAINS')
+      ->condition('title', $input, 'STARTS_WITH')
       ->groupBy('nid')
-      ->sort('created', 'DESC')
-      ->range(0, 10);
+      ->sort('title', 'asc')
+      ->range(0, 15);
     $ids = $query->execute();
-      
+
     $nodes = $ids ? \Drupal\node\Entity\Node::loadMultiple($ids) : [];
     foreach ($nodes as $node) {
       //$dateTime  = $node->get('field_ngaysinh')->getValue()[0]['value'];
       //$date = DrupalDateTime::createFromFormat('Y-m-d', $dateTime);
-      //$ngaysinh = $date->format('d/m/Y'); // format it 
+      //$ngaysinh = $date->format('d/m/Y'); // format it
 
       $results[] = [
         'value' => $node->getTitle(),

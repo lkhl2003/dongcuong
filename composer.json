@@ -22,6 +22,7 @@
         "drupal/core-recommended": "^9",
         "drupal/core-vendor-hardening": "^9",
         "drupal/entity_word": "^2.5",
+        "drupal/examples": "^3.0",
         "drush/drush": "^10.3"
     },
     "conflict": {
