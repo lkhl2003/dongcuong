@@ -34,8 +34,9 @@ class JsonAutoCompleteController {
       //$date = DrupalDateTime::createFromFormat('Y-m-d', $dateTime);
       //$ngaysinh = $date->format('d/m/Y'); // format it
 
+
       $results[] = [
-        'value' => $node->getTitle(),
+        'value' => $node->getTitle() . '-' . $node->id(),
         'label' => $node->getTitle() . ' - ' . $node->get('field_ngaysinh')->getValue()[0]['value'],
       ];
     }

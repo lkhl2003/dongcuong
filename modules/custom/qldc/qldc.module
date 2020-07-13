@@ -1,5 +1,5 @@
 <?php
-
+use Drupal\Core\Form\FormStateInterface;
 /**
  * @file
  * Allows the creation of custom blocks through the user interface.
@@ -12,7 +12,10 @@ function qldc_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_stat
     }
 
     if ($form_id == 'node_xac_nhan_dan_su_form') {
+      //dsm($form['field_noithuongtru']['widget']);
         //dsm($form['title']['widget'][0]['value']);
+        $form['#prefix'] = '<div id="form_dan_su">';
+        $form['#suffix'] = '</div>';
         $form['#theme'] = 'dongcuong_node_xac_nhan_dan_su_form';
         $form['#cache'] = ['max-age' => 0];
         $form['title']['widget'][0]['value']['#autocomplete_route_name'] = 'qldc.autocomplete';
@@ -20,7 +23,7 @@ function qldc_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_stat
           'wrapper' => 'form_dan_su',
           'event' => 'autocompleteclose',
           'callback' => 'qldc_myAjaxCallback',
-          'disable-refocus' => FALSE,
+          'disable-refocus' => false,
         ];
     }
 }
@@ -32,8 +35,19 @@ function qldc_options_list_alter(array &$options, array $context)
 
 function qldc_myAjaxCallback(array &$form, FormStateInterface $form_state)
 {
-    // Prepare our textfield. check if the example select field has a selected option.
-    $form['field_noithuongtru']['widget'][0]['value'] = 'Tao thuong tru';
-    watch_dog('message', 'Set noi thong tru');
-    return $form['form_dan_su'];
+    $form['field_noithuongtru']['widget'][0]['value']['#value'] = 'Tao thuong tru';
+    \Drupal::logger('qldc')->notice('Set noi thuong tru here.');
+
+    //$d = new DateTime();
+    //$dateformat = 'Y-m-d';
+
+    //$value = $d->format($dateformat);
+    $hovaten = $form_state->getValue('title');
+    $date_value = $form_state->getValue('field_ngaysinh');
+
+    dsm($hovaten);
+
+    $form['field_ngaysinh']['widget'][0]['value']['date']['#value'] = '2020-02-05';
+
+    return $form;
 }
