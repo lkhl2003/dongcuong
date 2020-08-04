@@ -23,6 +23,7 @@
         "drupal/core-vendor-hardening": "^9",
         "drupal/entity_word": "^2.5",
         "drupal/examples": "^3.0",
+        "drupal/workflow": "^1.4",
         "drush/drush": "^10.3"
     },
     "conflict": {
