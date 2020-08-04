@@ -4,6 +4,7 @@ I. Dau buoi coding
 
 git pull
 mysql -u root -p dongcuong < dongcuong.sql
+mysql -u dongcuong -p dongcuong < dongcuong.sql
 
 =============================================
 II. Cuoi buoi coding
@@ -11,9 +12,12 @@ II. Cuoi buoi coding
 2. Push code
 
 mysqldump -u root -p dongcuong > dongcuong.sql
+mysqldump -u dongcuong -p dongcuong > dongcuong.sql
 git add .
 git commit -m 'Updated'
 git push
 
 
 admin/admin@Devel
+
+Tao branch thu workflow module (contribute)
