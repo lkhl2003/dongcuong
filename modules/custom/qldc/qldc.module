@@ -45,7 +45,7 @@ function qldc_myAjaxCallback(array &$form, FormStateInterface $form_state)
     $hovaten = $form_state->getValue('title');
     $date_value = $form_state->getValue('field_ngaysinh');
 
-    dsm($hovaten);
+ //   dsm($hovaten);
 
     $form['field_ngaysinh']['widget'][0]['value']['date']['#value'] = '2020-02-05';
 
