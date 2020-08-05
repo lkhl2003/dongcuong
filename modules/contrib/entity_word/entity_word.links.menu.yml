@@ -1,5 +1,0 @@
-entity_word.settings:
-  title: 'Entity Word Document'
-  parent: system.admin_config_system
-  description: 'Settings for Entity Word Document'
-  route_name: entity_word.settings
