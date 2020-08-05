@@ -4,6 +4,7 @@ use Drupal\Core\Form\FormStateInterface;
  * @file
  * Allows the creation of custom blocks through the user interface.
  */
+
 function qldc_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
 {
     if ($form_id == 'node_congdan_form') {
