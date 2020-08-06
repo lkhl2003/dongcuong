@@ -1,5 +1,6 @@
 <?php
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\DateTime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 
@@ -15,6 +16,9 @@ function qldc_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_stat
     }
 
     if ($form_id == 'node_xac_nhan_dan_su_form') {
+
+        //qldc_testDate();
+
         $form['#prefix'] = '<div id="form_dan_su">';
         $form['#suffix'] = '</div>';
         $form['#theme'] = 'dongcuong_node_xac_nhan_dan_su_form';
@@ -55,4 +59,13 @@ function qldc_myAjaxCallback(array &$form, FormStateInterface $form_state)
       $form['field_noithuongtru']['widget'][0]['value']['#value'] = $node->get('field_noithuongtru')->getValue()[0]['value'];
     }
     return $form;
+}
+
+function qldc_testDate() {
+    $data_str = "2012-5-30";
+    $dateTime = new DrupalDateTime($data_str, 'UTC');
+    $formatDate = \Drupal::service('date.formatter')->format($dateTime->getTimestamp(),'custom', 'd/m/Y');
+
+
+dsm($formatDate);
 }
