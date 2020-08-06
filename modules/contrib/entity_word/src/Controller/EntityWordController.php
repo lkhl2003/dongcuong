@@ -157,7 +157,7 @@ class EntityWordController extends ControllerBase {
       $media = Media::load($target_id);
       $fid = $media->getSource()->getSourceFieldValue($media);
       $file = $this->entityTypeManager->getStorage('file')->load($fid);
-      return $file->url();
+      return $file->toUrl()->toString();
     }
   }
 

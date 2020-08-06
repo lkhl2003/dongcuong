@@ -9,7 +9,7 @@ configure: entity_word.settings
 dependencies:
   - token:token
 
-# Information added by Drupal.org packaging script on 2020-04-15
-version: '8.x-2.5'
+# Information added by Drupal.org packaging script on 2020-08-05
+version: '8.x-2.6'
 project: 'entity_word'
-datestamp: 1586942782
+datestamp: 1596622169
