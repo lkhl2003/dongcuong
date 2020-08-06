@@ -31,17 +31,19 @@ class JsonAutoCompleteController {
 
     $nodes = $ids ? \Drupal\node\Entity\Node::loadMultiple($ids) : [];
     foreach ($nodes as $node) {
-      $date_format = '';
-      if(null !== $node->get('field_ngaysinh')) {
-        $dateTime = new DrupalDateTime($node->get('field_ngaysinh')->getValue()[0]['value'], 'UTC');
-        $date_format = \Drupal::service('date.formatter')->format($dateTime->getTimestamp(),'custom', 'd/m/Y');
-      }
-
+      $dates = explode('-', $node->get('field_ngaysinh')->getValue()[0]['value']);
       $results[] = [
         'value' => $node->getTitle() . '-' . $node->id(),
-        'label' => $node->getTitle() . ' - ' . $date_format,
+        //'label' => $node->getTitle() . ' - ' . $node->get('field_ngaysinh')->getValue()[0]['value'],
+       'label' => $node->getTitle() . ' - ' . $dates[2] . '/' . $dates[1]  . '/' . $dates[0],
       ];
     }
     return new JsonResponse($results);
+  }
+  private function test($date_str) {
+
+      $date = new DrupalDateTime($date_str, 'UTC');
+      return $date->format("d/m/Y");
+
   }
 }
