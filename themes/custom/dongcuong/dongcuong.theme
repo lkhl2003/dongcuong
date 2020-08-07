@@ -1,14 +1,72 @@
 <?php
 
-function dongcuong_theme($existing, $type, $theme, $path) {
-  $rett = [
+function dongcuong_theme($existing, $type, $theme, $path)
+{
+    $rett = [
     'dongcuong_node_congdan_form' => [
       'render element' => 'form'
     ],
     'dongcuong_node_xac_nhan_dan_su_form' => [
       'render element' => 'form'
     ],
-  ];
+    ];
 
-  return $rett;
+    return $rett;
+}
+
+function dongcuong_preprocess_node(&$variables)
+{
+    $entity = $variables['node'];
+
+    $moderationState = $entity->get('moderation_state');
+    $moderation_info = \Drupal::service('content_moderation.moderation_information');
+    //dsm($moderation_info);
+    $storage = \Drupal::entityTypeManager()->getStorage('content_moderation_state');
+    $ids = $storage->getQuery()
+          ->condition('content_entity_type_id', $entity->getEntityTypeId())
+          ->condition('content_entity_id', $entity->id())
+          ->condition('workflow', $moderation_info->getWorkflowForEntity($entity)->id())
+          ->condition('content_entity_revision_id', $entity->getLoadedRevisionId())
+          ->allRevisions()
+          ->execute();
+
+    if ($ids) {
+
+        $content_moderation_state = $storage->loadRevision(key($ids));
+    }
+
+    $states = $moderation_info->getWorkflowForEntity($entity)->getTypePlugin()->getStates();
+    foreach($states as $state) {
+
+    //  dsm($state->id() . '-' . $state->label());
+    }
+
+    $trans = $moderation_info->getWorkflowForEntity($entity)->getTypePlugin()->gettransitions();
+    foreach($trans as $tran) {
+      dsm($tran->label() . '===' . $tran->to()->label());
+      //  dsm($state->id() . '-' . $state->label());
+      }
+
+
+//dsm($content_moderation_state);
+    //dpm($moderationState);
+    /* $content_moderation_state = NULL;
+    $moderation_info = \Drupal::service('content_moderation.moderation_information');
+
+    if ($moderation_info->isModeratedEntity($entity)) {
+      $storage = \Drupal::entityTypeManager()->getStorage('content_moderation_state');
+
+      $ids = $storage->getQuery()
+          ->condition('content_entity_type_id', $entity->getEntityTypeId())
+          ->condition('content_entity_id', $entity->id())
+          ->condition('workflow', $moderation_info->getWorkflowForEntity($entity)->id())
+          ->condition('content_entity_revision_id', $entity->getLoadedRevisionId())
+          ->allRevisions()
+          ->execute();
+
+    if ($ids) {
+
+        $content_moderation_state = $storage->loadRevision(key($ids));
+    }
+    } */
 }

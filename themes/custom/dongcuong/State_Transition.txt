@@ -1,0 +1,95 @@
+[states] => Array
+                                (
+                                    [cho_tra_ket_qua] => Array
+                                        (
+                                            [published] =>
+                                            [default_revision] =>
+                                            [label] => Chờ trả kết quả
+                                            [weight] => 0
+                                        )
+
+                                    [draft] => Array
+                                        (
+                                            [published] =>
+                                            [default_revision] =>
+                                            [label] => Tạo hồ sơ
+                                            [weight] => -3
+                                        )
+
+                                    [duyet_ho_so] => Array
+                                        (
+                                            [published] =>
+                                            [default_revision] =>
+                                            [label] => Lãnh đạo xét duyệt
+                                            [weight] => -1
+                                        )
+
+                                    [published] => Array
+                                        (
+                                            [published] => 1
+                                            [default_revision] => 1
+                                            [label] => Trả công dân
+                                            [weight] => 1
+                                        )
+
+                                    [xac_nhan_cong_dan] => Array
+                                        (
+                                            [published] =>
+                                            [default_revision] =>
+                                            [label] => Cán bộ khu vực xác nhận
+                                            [weight] => -2
+                                        )
+
+                                )
+
+                            [transitions] => Array
+                                (
+                                    [bo_sung_ho_so] => Array
+                                        (
+                                            [label] => Bổ sung hồ sơ
+                                            [from] => Array(1)
+                                            [to] => xac_nhan_cong_dan
+                                            [weight] => 0
+                                        )
+
+                                    [chuyen_tra_ket_qua] => Array
+                                        (
+                                            [label] => Chuyển trả kết quả
+                                            [from] => Array(1)
+                                            [to] => cho_tra_ket_qua
+                                            [weight] => 1
+                                        )
+
+                                    [chuyen_xac_nhan] => Array
+                                        (
+                                            [label] => Chuyển xác nhận
+                                            [from] => Array(1)
+                                            [to] => xac_nhan_cong_dan
+                                            [weight] => -2
+                                        )
+
+                                    [chuyen_xet_duyet] => Array
+                                        (
+                                            [label] => Chuyển xét duyệt
+                                            [from] => Array(1)
+                                            [to] => duyet_ho_so
+                                            [weight] => -1
+                                        )
+
+                                    [create_new_draft] => Array
+                                        (
+                                            [label] => Create New Draft
+                                            [to] => draft
+                                            [weight] => -3
+                                            [from] => Array(1)
+                                        )
+
+                                    [publish] => Array
+                                        (
+                                            [label] => Trả công dân
+                                            [to] => published
+                                            [weight] => 2
+                                            [from] => Array(1)
+                                        )
+
+                                )

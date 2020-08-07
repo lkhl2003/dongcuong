@@ -11,6 +11,7 @@ II. Cuoi buoi coding
 1. Export database
 2. Push code
 
+drush cr
 mysqldump -u root -p dongcuong > dongcuong.sql
 mysqldump -u dongcuong -p dongcuong > dongcuong.sql
 git add .
