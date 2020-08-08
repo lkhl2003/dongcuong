@@ -1,34 +1,123 @@
 <?php
+  use Drupal\Core\Datetime\DrupalDateTime;
+  use Drupal\datetime\Plugin\Field\FieldType\DateTimeFieldItemList;
+  use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+  use Drupal\user\Entity\User;
 
 function dongcuong_theme($existing, $type, $theme, $path)
 {
     $rett = [
     'dongcuong_node_congdan_form' => [
-      'render element' => 'form'
+    'render element' => 'form'
     ],
     'dongcuong_node_xac_nhan_dan_su_form' => [
-      'render element' => 'form'
+    'render element' => 'form'
     ],
     ];
 
     return $rett;
 }
-
 function dongcuong_preprocess_node(&$variables)
 {
-    $entity = $variables['node'];
 
+    $node = $variables['node'];
+    $node_type = $node->type->entity->get('type');
+
+    if($node_type !== 'xac_nhan_dan_su') {
+        return;
+    }
+
+    $revisionIds = \Drupal::entityTypeManager()->getStorage('node')->revisionIds($node);
+    $moderation_info = \Drupal::service('content_moderation.moderation_information');
+    $workflow = $moderation_info->getWorkflowForEntity($node);
+
+    $header = [
+        'STT',
+        'Thời gian',
+        'Cán bộ xử lý',
+        'Trạng thái hồ sơ',
+    ];
+    $rows = [];
+    $stt = 1;
+    foreach($revisionIds as $revision_id) {
+        $revision_node = \Drupal::entityTypeManager()->getStorage('node')->loadRevision($revision_id);
+        $revision_state_id = $revision_node->get('moderation_state')->getString();
+        $revision_uid = $revision_node->getRevisionUser()->id();
+
+        $revision_user = User::load($revision_uid);
+
+        $revision_user_name = $revision_user->get('field_ho_va_ten')->value ? $revision_user->get('field_ho_va_ten')->value : $revision_user->get('name')->value;
+
+        $revision_state_name = $workflow->getTypePlugin()->getState($revision_state_id)->label();
+        $revision_created_time = $revision_node->getRevisionCreationTime();
+
+        /// $date_created = new DrupalDateTime($revision_created_time, DateTimeItemInterface::STORAGE_TIMEZONE);
+        $date_created = DrupalDateTime::createFromTimestamp($revision_created_time);
+
+        $date_created_value = $date_created->format('d/m/Y H:M:S');
+
+
+
+        //dsm($revision_state->label());
+        //revision_uid
+        //dsm($revision_node);
+        //dsm($revision_uid->id());
+        //dsm($date_created_value);
+        //revision_created_time
+        //dsm($revision_created_time . '===' . \Drupal::service('date.formatter')->format($revision_created_time, 'short') );
+        //dsm($revision_user);
+        //dsm($revision_id . '--' . $revision_state_id . '---' . $revision_user_name . '---' . $revision_state_name . '===' . $date_created_value);
+
+        $rows[$revision_id] = [
+            $stt++,
+            \Drupal::service('date.formatter')->format($revision_created_time, 'custom', 'd/m/Y h:i:s'),
+            $revision_user_name,
+            $revision_state_name,
+
+        ];
+
+        //Transitions
+        $revision_transitions = $workflow->getTypePlugin()->getState($revision_state_id)->getTransitions();
+        //dsm($revision_transitions);
+        foreach($revision_transitions as $key => $tran) {
+           // dsm($key);
+        }
+    }
+
+
+
+    $variables['my_states'] = [
+    '#theme' => 'table',
+    '#header' => $header,
+    '#rows' => $rows,
+    ];
+}
+
+function dongcuong2222_preprocess_node(&$variables)
+{
+    $workflow->getTypePlugin()->getState($moderation_state);
+
+    $entity = $variables['node'];
+    // Before - passing a string of rendered HTML to the template.
+    $variables['table'] = theme('table', ['header' => $header, 'rows' => $rows]);
+
+    // After - passing a render array to the template.
+    $variables['table'] = [
+    '#theme' => 'table',
+    '#header' => $header,
+    '#rows' => $rows,
+    ];
     $moderationState = $entity->get('moderation_state');
     $moderation_info = \Drupal::service('content_moderation.moderation_information');
     //dsm($moderation_info);
     $storage = \Drupal::entityTypeManager()->getStorage('content_moderation_state');
     $ids = $storage->getQuery()
-          ->condition('content_entity_type_id', $entity->getEntityTypeId())
-          ->condition('content_entity_id', $entity->id())
-          ->condition('workflow', $moderation_info->getWorkflowForEntity($entity)->id())
-          ->condition('content_entity_revision_id', $entity->getLoadedRevisionId())
-          ->allRevisions()
-          ->execute();
+        ->condition('content_entity_type_id', $entity->getEntityTypeId())
+        ->condition('content_entity_id', $entity->id())
+        ->condition('workflow', $moderation_info->getWorkflowForEntity($entity)->id())
+        ->condition('content_entity_revision_id', $entity->getLoadedRevisionId())
+        ->allRevisions()
+        ->execute();
 
     if ($ids) {
 
@@ -38,17 +127,17 @@ function dongcuong_preprocess_node(&$variables)
     $states = $moderation_info->getWorkflowForEntity($entity)->getTypePlugin()->getStates();
     foreach($states as $state) {
 
-    //  dsm($state->id() . '-' . $state->label());
+        //  dsm($state->id() . '-' . $state->label());
     }
 
     $trans = $moderation_info->getWorkflowForEntity($entity)->getTypePlugin()->gettransitions();
     foreach($trans as $tran) {
-      dsm($tran->label() . '===' . $tran->to()->label());
-      //  dsm($state->id() . '-' . $state->label());
-      }
+        dsm($tran->label() . '===' . $tran->to()->label());
+        //  dsm($state->id() . '-' . $state->label());
+    }
 
 
-//dsm($content_moderation_state);
+    //dsm($content_moderation_state);
     //dpm($moderationState);
     /* $content_moderation_state = NULL;
     $moderation_info = \Drupal::service('content_moderation.moderation_information');

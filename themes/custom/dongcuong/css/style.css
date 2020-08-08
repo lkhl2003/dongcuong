@@ -260,7 +260,7 @@ select {
 select {
   word-wrap: normal;
   height: 32px;
-  width: 100%;    
+  width: 100%;
 }
 
 button,
@@ -309,7 +309,7 @@ fieldset {
 }
 
 legend {
-  display: block;  
+  display: block;
   max-width: 100%;
   padding: 0;
   margin-bottom: .5rem;
@@ -10331,4 +10331,10 @@ table {
 
 .region-secondary-menu .menu {
     float: right;
+}
+
+.qtxl {
+  color: #a05b01;
+  font-weight: bold;
+  text-decoration: underline;
 }
