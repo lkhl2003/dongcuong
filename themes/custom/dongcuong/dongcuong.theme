@@ -3,6 +3,8 @@
   use Drupal\datetime\Plugin\Field\FieldType\DateTimeFieldItemList;
   use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
   use Drupal\user\Entity\User;
+  use Drupal\Core\Link;
+  use Drupal\Core\Url;
 
 function dongcuong_theme($existing, $type, $theme, $path)
 {
@@ -22,6 +24,7 @@ function dongcuong_preprocess_node(&$variables)
 
     $node = $variables['node'];
     $node_type = $node->type->entity->get('type');
+
 
     if($node_type !== 'xac_nhan_dan_su') {
         return;
@@ -80,17 +83,30 @@ function dongcuong_preprocess_node(&$variables)
         $revision_transitions = $workflow->getTypePlugin()->getState($revision_state_id)->getTransitions();
         //dsm($revision_transitions);
         foreach($revision_transitions as $key => $tran) {
-           // dsm($key);
+            // dsm($key);
         }
     }
-
-
 
     $variables['my_states'] = [
     '#theme' => 'table',
     '#header' => $header,
     '#rows' => $rows,
     ];
+
+    if($node->isNew()) {
+        dsm('New');
+
+    }
+
+    $lats_rIDs = \Drupal::entityTypeManager()->getStorage('node')->revisionIds($node);
+    $last_rID = end($lats_rIDs);
+    $l_revision_node = \Drupal::entityTypeManager()->getStorage('node')->loadRevision($last_rID);
+    $l_revision_state_id = $l_revision_node->get('moderation_state')->getString();
+
+    if($l_revision_state_id == 'cho_tra_ket_qua') {
+        $link = Link::fromTextAndUrl('Đơn đề nghị: ', Url::fromUri('internal:/node/'.$node->id()))->toString();
+        $variables['don_de_nghi'] = $link;
+    }
 }
 
 function dongcuong2222_preprocess_node(&$variables)
