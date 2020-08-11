@@ -5,4 +5,13 @@ qldc.autocomplete:
       _format: json
     requirements:
       _permission: 'access content'
-      
+qldc.donxacnhan:
+  path: '/donxacnhan/{node}'
+  defaults:
+    _controller: '\Drupal\qldc\Controller\DonXacNhanController::nodeWord'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      node:
+        type: entity:node

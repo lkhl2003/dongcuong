@@ -101,7 +101,8 @@ function dongcuong_preprocess_node(&$variables)
     $l_revision_state_id = $l_revision_node->get('moderation_state')->getString();
 
     if($l_revision_state_id == 'cho_tra_ket_qua') {
-        $link = Link::fromTextAndUrl('Đơn đề nghị: ', Url::fromUri('internal:/node/'.$node->id()))->toString();
+        $link = Link::fromTextAndUrl('Đơn đề nghị: ', Url::fromUri('internal:/donxacnhan/'.$node->id()))->toString();
+        //$link2 = Link::fromTextAndUrl('Đơn', Url::fromUri('public://'.$node->id().'.docx'))->toString();
         $variables['don_de_nghi'] = $link;
     }
 }
