@@ -711,6 +711,7 @@ $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
 $settings['trusted_host_patterns'] = [
   '^localhost$',
   '^127\.0\.0\.1$',
+  '^172\.28\.56\.23$',
   ];
 /**
  * The default list of directories that will be ignored by Drupal's file API.

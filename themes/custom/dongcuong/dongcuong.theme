@@ -54,10 +54,12 @@ function dongcuong_preprocess_node(&$variables)
         $revision_state_name = $workflow->getTypePlugin()->getState($revision_state_id)->label();
         $revision_created_time = $revision_node->getRevisionCreationTime();
 
-        /// $date_created = new DrupalDateTime($revision_created_time, DateTimeItemInterface::STORAGE_TIMEZONE);
+        //$date_created = new DrupalDateTime($revision_created_time, DateTimeItemInterface::STORAGE_TIMEZONE);
         $date_created = DrupalDateTime::createFromTimestamp($revision_created_time);
+        //$date = DateTimePlus::createFromFormat($format, $value, new \DateTimeZone(DateTimeItemInterface::STORAGE_TIMEZONE));
 
-        $date_created_value = $date_created->format('d/m/Y H:M:S');
+
+        $date_created_value = $date_created->format('j/n/Y H:M:S');
 
 
 
@@ -73,7 +75,7 @@ function dongcuong_preprocess_node(&$variables)
 
         $rows[$revision_id] = [
             $stt++,
-            \Drupal::service('date.formatter')->format($revision_created_time, 'custom', 'd/m/Y h:i:s'),
+            \Drupal::service('date.formatter')->format($revision_created_time, 'custom', 'j/n/Y h:i:s'),
             $revision_user_name,
             $revision_state_name,
 
@@ -92,11 +94,6 @@ function dongcuong_preprocess_node(&$variables)
     '#header' => $header,
     '#rows' => $rows,
     ];
-
-    if($node->isNew()) {
-        dsm('New');
-
-    }
 
     $lats_rIDs = \Drupal::entityTypeManager()->getStorage('node')->revisionIds($node);
     $last_rID = end($lats_rIDs);

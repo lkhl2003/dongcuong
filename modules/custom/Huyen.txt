@@ -22,3 +22,6 @@ git push
 admin/admin@Devel
 
 Tao branch thu workflow module (contribute)
+
+TODO
+- Xuat file word
