@@ -93,8 +93,14 @@
   {% endif %}
 
   <div{{ content_attributes }}>
-    {{ content }}
+    {{ content.field_ngaysinh }}
+    {{ content.field_noithuongtru }}
+    {{ content.field_noidungxacnhan }}
+  {{don_de_nghi}}
+
+    {{ content | without ('field_ngaysinh', 'field_noithuongtru','field_noidungxacnhan') }}
   </div>
+
   <div class='qtxl' >
     Quy trình xử lý
   </div>
@@ -102,5 +108,4 @@
   <div{{ content_attributes }} >
     {{ my_states }}
   </div>
-  {{don_de_nghi}}
 </article>

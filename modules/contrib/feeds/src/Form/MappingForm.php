@@ -212,8 +212,13 @@ class MappingForm extends FormBase {
     ];
 
     foreach ($mapping['map'] as $column => $source) {
+            // Remove missing targets (=if the field does not exist anymore)
+            if (empty($this->targets[$mapping['target']])) {
+              $this->feedType->removeMapping($delta);
+              return;
+            }
       if (!$this->targets[$mapping['target']]->hasProperty($column)) {
-        unset($mapping['map'][$column]);
+          unset($mapping['map'][$column]);
         continue;
       }
       $row['map'][$column] = [

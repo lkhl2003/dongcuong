@@ -4,7 +4,6 @@ use Drupal\Core\DateTime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 
-
 use Drupal\Core\Controller\ControllerBase;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Shared\Html;
@@ -19,23 +18,23 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\media\Entity\Media;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Drupal\views\ViewExecutable;
 /**
  * Implements hook_entity_insert().
  */
 function qldc_entity_presave(Drupal\Core\Entity\EntityInterface $entity)
 {
     if ($entity->getEntityTypeId() == 'node' && $entity->isNew() && $entity->getType() == 'xac_nhan_dan_su') {
-
-
+        $qldc_cd_id = $_SESSION['qldc_cd_id'];
+        $entity->field_uid->value = $qldc_cd_id;
         $date = DrupalDateTime::createFromFormat('Y-m-d', $entity->field_ngaysinh->value);
-
         $ngaysinh = $date->format('d/n/Y');
         $now = new DrupalDateTime('now');  // grab current dateTime
         $ngay = $now->format('d');
         $thang = $now->format('n');
         $nam = $now->format('Y');
         $entity->field_noidungxacnhan->value = 'Công an phường Đông Cương xác nhận '.$entity->title->value.', sinh năm '. $ngaysinh .' có hộ khẩu thường trú tại: '. $entity->field_noithuongtru->value .' chấp hành tốt đường lối, chính sách của Đảng, pháp luật của Nhà nước; chưa tiền án, tiền sự; trong quá trình sinh sống tại địa phương từ ngày '.$ngay.'/'.$thang.'/'.($nam-5).' đến ngày '.$ngay.'/'.$thang.'/'.$nam.' chưa có sai phạm, vi phạm gì';
-
     }
 }
 
@@ -45,13 +44,13 @@ function qldc_entity_presave(Drupal\Core\Entity\EntityInterface $entity)
  */
 function qldc_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
 {
-    //dsm($form_id);
     if ($form_id == 'node_congdan_form') {
         $form['#theme'] = 'dongcuong_node_congdan_form';
         $form['#cache'] = ['max-age' => 0];
     }
 
     if ($form_id == 'node_xac_nhan_dan_su_form') {
+
         $form['#prefix'] = '<div id="form_dan_su">';
         $form['#suffix'] = '</div>';
         $form['#theme'] = 'dongcuong_node_xac_nhan_dan_su_form';
@@ -69,7 +68,17 @@ function qldc_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_stat
           'callback' => 'qldc_myAjaxCallback',
           'disable-refocus' => false,
         ];
+        foreach (array_keys($form['actions']) as $action) {
+            if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+                $form['actions'][$action]['#submit'][] = 'qldc_node_xnds_submit';
+            }
+        }
     }
+}
+
+function qldc_node_xnds_submit($form, FormStateInterface $form_state)
+{
+    $form_state->setRedirect('qldc.xacnhandansu.them');
 }
 
 function qldc_options_list_alter(array &$options, array $context)
@@ -85,27 +94,35 @@ function qldc_myAjaxCallback(array &$form, FormStateInterface $form_state)
     $hovaten_nid = explode('-', $hovaten[0]['value']);
     if(isset($hovaten_nid[1])) {
         $nid = $hovaten_nid[1];
+
+        $_SESSION['qldc_cd_id'] = $nid;
+
         $node = \Drupal\node\Entity\Node::load($nid);
 
         $form['title']['widget'][0]['value']['#value'] = $node->get('title')->getValue()[0]['value'];
         $form['field_ngaysinh']['widget'][0]['value']['date']['#value'] = $node->get('field_ngaysinh')->getValue()[0]['value'];
         $form['field_noithuongtru']['widget'][0]['value']['#value'] = $node->get('field_noithuongtru')->getValue()[0]['value'];
+        $form['field_uid']['widget'][0]['value']['#value']  = $nid;
+        $form['qldc_nid']['#value'] = $nid;
     }
     return $form;
 }
-
-/**
- * Process media url.
- *
- * @param int $target_id
- *   Media target id of the file.
- */
-function mediaUrl($target_id)
+function qldc_views_pre_render(ViewExecutable $view)
 {
-    if ($target_id) {
-        $media = Media::load($target_id);
-        $fid = $media->getSource()->getSourceFieldValue($media);
-        $file = $this->entityTypeManager->getStorage('file')->load($fid);
-        return $file->toUrl()->toString();
+  if ($view->id() == 'danh_sach_ho_so' && $view->current_display == 'canboxacnhan'){
+        $uid = \Drupal::currentUser()->id();
+        $user = \Drupal\user\Entity\User::load($uid);
+        $taxonomyTid = $user->field_ur_khu_vuc_quan_ly->target_id;
+
+        foreach($view->result as $key => $value) {
+            $ur_id =  $value->_entity->field_uid->getValue()[0]['value'];
+
+            $congdan = \Drupal\node\Entity\Node::load($ur_id);
+
+            $taxonomyTid2 = $congdan->field_khu_vuc_quan_ly->target_id;
+            if($taxonomyTid2 != $taxonomyTid) {
+                unset($view->result[$key]);
+            }
+        }
     }
 }

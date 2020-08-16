@@ -14,6 +14,16 @@ use PhpOffice\PhpWord\Settings;
  * Defines a route controller for watches autocomplete form elements.
  */
 class DonXacNhanController{
+    public function them() {
+      $node = \Drupal::entityTypeManager()->getStorage('node')->create(array(
+        'type' => 'xac_nhan_dan_su',
+      ));
+
+      $form = \Drupal::service('entity.form_builder')->getForm($node);
+
+      return $form;
+    }
+
     public function nodeWord($node = null)
     {   Settings::loadConfig();
 
@@ -58,6 +68,6 @@ class DonXacNhanController{
         flush();
         readfile($doc_filename);
         unlink($doc_filename);
-        drupal_exit();
+        exit();
     }
 }

@@ -13,7 +13,6 @@ II. Cuoi buoi coding
 
 drush cr
 mysqldump -u root -p dongcuong > dongcuong.sql
-mysqldump -u dongcuong -p dongcuong > dongcuong.sql
 git add .
 git commit -m 'Updated'
 git push

@@ -15,3 +15,9 @@ qldc.donxacnhan:
     parameters:
       node:
         type: entity:node
+qldc.xacnhandansu.them:
+  path: '/xacnhandansu/them'
+  defaults:
+    _controller: '\Drupal\qldc\Controller\DonXacNhanController::them'
+  requirements:
+    _role: 'truc_bn'
