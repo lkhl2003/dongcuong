@@ -20,4 +20,4 @@ qldc.xacnhandansu.them:
   defaults:
     _controller: '\Drupal\qldc\Controller\DonXacNhanController::them'
   requirements:
-    _role: 'truc_bn'
+    _role: 'truc_bn + administrator'

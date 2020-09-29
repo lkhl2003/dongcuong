@@ -34,7 +34,18 @@ function qldc_entity_presave(Drupal\Core\Entity\EntityInterface $entity)
         $ngay = $now->format('d');
         $thang = $now->format('n');
         $nam = $now->format('Y');
-        $entity->field_noidungxacnhan->value = 'Công an phường Đông Cương xác nhận '.$entity->title->value.', sinh năm '. $ngaysinh .' có hộ khẩu thường trú tại: '. $entity->field_noithuongtru->value .' chấp hành tốt đường lối, chính sách của Đảng, pháp luật của Nhà nước; chưa tiền án, tiền sự; trong quá trình sinh sống tại địa phương từ ngày '.$ngay.'/'.$thang.'/'.($nam-5).' đến ngày '.$ngay.'/'.$thang.'/'.$nam.' chưa có sai phạm, vi phạm gì';
+        $entity->field_noidungxacnhan->value = 'Công an phường Đông Cương xác nhận '.$entity->title->value.', sinh năm '. $ngaysinh .' có hộ khẩu thường trú tại '. $entity->field_noithuongtru->value;
+
+        $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+        $node = $node_storage->load($qldc_cd_id);
+        $llcd = $node->get('body')->value;
+        if(is_null($llcd)) {
+            $entity->field_noidungxacnhan->value .= ' chấp hành tốt đường lối, chính sách của Đảng, pháp luật của Nhà nước; chưa tiền án, tiền sự; trong quá trình sinh sống tại địa phương từ ngày '.$ngay.'/'.$thang.'/'.($nam-5).' đến ngày '.$ngay.'/'.$thang.'/'.$nam.' chưa có sai phạm, vi phạm gì';
+        }
+        else {
+            $entity->field_noidungxacnhan->value .= ": " . strip_tags($llcd);
+        }
+
     }
 }
 
@@ -44,9 +55,32 @@ function qldc_entity_presave(Drupal\Core\Entity\EntityInterface $entity)
  */
 function qldc_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
 {
+
     if ($form_id == 'node_congdan_form') {
         $form['#theme'] = 'dongcuong_node_congdan_form';
         $form['#cache'] = ['max-age' => 0];
+    }
+
+    if($form_id == 'node_xac_nhan_dan_su_edit_form') {
+        $node = \Drupal::routeMatch()->getParameter('node');
+        $cd_id = $node->get('field_uid')->value;
+
+        $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+        $node = $node_storage->load($cd_id);
+        $llcd = strip_tags($node->get('body')->value);
+
+        $form['qldc_xnds_llbt'] = array(
+           // '#markup' => 'Test ly lich ca nhan',
+            '#type' => 'textarea',
+            '#title' => 'Lịch sử bản thân',
+            '#input' => FALSE,
+            '#default_value' => $llcd,
+            '#value' => $llcd,
+            '#weight' => 2,
+            '#attributes' => array('disabled' => 'disabled'),
+        );
+
+
     }
 
     if ($form_id == 'node_xac_nhan_dan_su_form') {
@@ -109,7 +143,7 @@ function qldc_myAjaxCallback(array &$form, FormStateInterface $form_state)
 }
 function qldc_views_pre_render(ViewExecutable $view)
 {
-  if ($view->id() == 'danh_sach_ho_so' && $view->current_display == 'canboxacnhan'){
+    if ($view->id() == 'danh_sach_ho_so' && $view->current_display == 'canboxacnhan') {
         $uid = \Drupal::currentUser()->id();
         $user = \Drupal\user\Entity\User::load($uid);
         $taxonomyTid = $user->field_ur_khu_vuc_quan_ly->target_id;

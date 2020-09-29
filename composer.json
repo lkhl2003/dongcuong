@@ -23,6 +23,7 @@
         "drupal/core-vendor-hardening": "^9",
         "drupal/entity_word": "^2.6",
         "drupal/moderation_dashboard": "^1.0@beta",
+        "drupal/views_data_export": "^1.0",
         "phpoffice/phpword": "^0.17.0"
     },
     "conflict": {
