@@ -17,10 +17,14 @@ git add .
 git commit -m 'Updated'
 git push
 
-
+==========================
+mysql: root/khtc123
 admin/admin@Devel
 
 Tao branch thu workflow module (contribute)
 
 TODO
 - Xuat file word
+
+UPDATE CORE
+composer update drupal/core-recommended --with-dependencies
