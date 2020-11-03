@@ -10338,3 +10338,9 @@ table {
   font-weight: bold;
   text-decoration: underline;
 }
+
+.site-branding__slogan {
+ color: #2af510;
+     font-size: 1.2rem;
+
+}
